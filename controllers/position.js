@@ -1,4 +1,4 @@
-const POsition = require('../models/Position')
+const Position = require('../models/Position')
 const errorHandler = require('../utils/errorHendler')
 
 
@@ -6,6 +6,8 @@ const errorHandler = require('../utils/errorHendler')
 module.exports.getByCategoryID = async function(req, res) {
 
     try {
+
+        const positions = await Position
 
     } catch (e) {
         errorHandler(res, e)
