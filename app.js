@@ -23,7 +23,7 @@ mongoose.connect(keys.mongoURI)
 
 
 app.use(passport.initialize())
-require('.middleware/passport')(passport)
+require('./middleware/passport')(passport)
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

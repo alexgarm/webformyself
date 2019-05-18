@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Schema = mangoose.Schema
+const Schema = mongoose.Schema
 
 const positionSсhema = new Schema({
 
@@ -23,4 +23,5 @@ const positionSсhema = new Schema({
     }
 
 })
-module.exports = mongoose.model('positions', positionSchema)
+
+module.exports = mongoose.model('positions', positionSсhema)
