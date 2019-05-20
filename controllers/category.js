@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const Category = require('../models/Category')
 const errorHandler = require('../utils/errorHendler')
 const Position = require('../models/Position')
@@ -8,11 +7,6 @@ module.exports.getAll = async function(req, res) {
     try {
         const categories = await Category.find({ user: req.user.id })
         res.status(200).json(categories)
-=======
-module.exports.getAll = function(req, res) {
-}
-module.exports.getbyId = function(req, res) {
->>>>>>> bdc527006fb425f38416a033f2b91cd831b2b8b0
 
     } catch (e) {
         errorHandler(res, e)
