@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const Schema = mangoose.Schema
+const Schema = mongoose.Schema
 
-const orderSсhema = new Schema({
+const orderSchema = new Schema({
 
     date: {
         type: Date,
-        default: Data.now,
+        default: Date.now,
         required: true
     },
     order: {
