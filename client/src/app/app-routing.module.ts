@@ -4,7 +4,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 
 const routes: Routes = [
   { path: 'Login', component: LoginPageComponent }
-  
+
 ];
 
 @NgModule({
@@ -12,4 +12,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-}
+
