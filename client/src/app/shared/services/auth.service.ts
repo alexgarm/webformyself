@@ -11,10 +11,11 @@ import { tap } from 'rxjs/internal/operators';
 export class AuthService {
 
   private token = null;
+
   constructor(private http: HttpClient) { }
 
-  register(user: User) Observable<User>{
-    return this.http.post<User>('', user)
+  register(user: User): Observable<User> {
+    return this.http.post<User>('api/auth/register', user);
    }
 
   login(user: User): Observable<{ token: string }> {
@@ -24,8 +25,7 @@ export class AuthService {
           ({ token }) => {
             localStorage.setItem('auth-token', token);
             this.setToken(token);
-          }
-        )
+          })
       );
 
   }

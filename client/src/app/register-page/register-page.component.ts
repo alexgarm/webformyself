@@ -11,11 +11,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.css']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent implements OnInit, OnDestroy {
+
   form: FormGroup;
+  aSub: Subscription;
 
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
 
   }
   ngOnInit() {
@@ -24,10 +26,27 @@ export class RegisterPageComponent implements OnInit {
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
     })
   }
+  ngOnDestroy() {
+    if (this.aSub) {
+      this.aSub.unsubscribe()
+    }
 
+  }
   onSubmit() {
     this.form.disable();
-    this.auth.register(this.form.value);
+    this.aSub = this.auth.register(this.form.value).subscribe(
+      () => {
+        this.router.navigate(['/login'], {
+          queryParams: {
+            registered: true
+          }
+        })
+      },
+      error => {
+        console.warn(error);
+        this.form.enable();
+      });
+
   }
 
 }
