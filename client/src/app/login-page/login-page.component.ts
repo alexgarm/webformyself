@@ -5,6 +5,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { error } from '@angular/compiler/src/util';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MaterialService } from '../shared/classes/material.service';
 
 @Component({
   selector: 'app-login-page',
@@ -30,10 +31,15 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     );
     this.route.queryParams.subscribe((params: Params) => {
       if (params.registered) {
-        // теперь вы можете зайти в систему используя свои данные
+        MaterialService.toast('теперь вы можете зайти в систему используя свои данные')
+
 // tslint:disable-next-line: one-line
       }else if (params.accessDenied){
-        // для начала авторизируйтесь
+        MaterialService.toast('для начала авторизируйтесь')
+        //
+      }else if (params.sessionFailed){
+        MaterialService.toast('выполните вход , время сессии истекло')
+        //
       }
     });
   }
@@ -47,6 +53,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.aSub = this.auth.login(this.form.value).subscribe(
         () => this.router.navigate(['/overview']),
         error => {
+          MaterialService.toast(error.error.message)
           console.warn(error);
           this.form.enable();
         });
