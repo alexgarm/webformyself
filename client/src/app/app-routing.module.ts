@@ -22,11 +22,11 @@ const routes: Routes = [
   },
   {
     path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
-      {path:'overview' , component: OverviewPageComponent},
-      {path:'analytics' , component: AnalyticsPageComponent},
-      {path:'order' , component: OrderPageComponent},
-      {path:'history' , component: HistoryPageComponent},
-      {path:'categories' , component: CategoriesPageComponent}
+      {path: 'overview' , component: OverviewPageComponent},
+      {path: 'analytics' , component: AnalyticsPageComponent},
+      {path: 'order' , component: OrderPageComponent},
+      {path: 'history' , component: HistoryPageComponent},
+      {path: 'categories' , component: CategoriesPageComponent}
 
     ]
   }
