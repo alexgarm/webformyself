@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '../shared/services/categories.service';
 import { Category } from '../shared/interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-categories-page',
@@ -11,16 +12,12 @@ export class CategoriesPageComponent implements OnInit {
 
 
 
-  categories: Category[] = []
+  categories$: Observable<Category[]>
   constructor(private categoriesService: CategoriesService) { }
 
   ngOnInit() {
 
-    this.categoriesService.fetch().subscribe(categories=> {
-
-
-      console.log('Categories' , categories)
-    })
+    this.categories$ =  this.categoriesService.fetch()
   }
 
 }
