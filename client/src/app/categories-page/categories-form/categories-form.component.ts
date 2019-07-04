@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { CategoriesService } from 'src/app/shared/services/categories.service';
 import { of } from 'rxjs';
 import { MaterialService } from 'src/app/shared/classes/material.service';
+import { Category } from 'src/app/shared/interface';
 
 @Component({
   selector: 'app-categories-form',
@@ -13,7 +14,10 @@ import { MaterialService } from 'src/app/shared/classes/material.service';
 })
 export class CategoriesFormComponent implements OnInit {
 
+  @ViewChild('input') inputRef : ElementRef
   form: FormGroup;
+  image: File;
+  imagePreview = '';
   isNew = true;
 
   constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
@@ -43,9 +47,10 @@ export class CategoriesFormComponent implements OnInit {
       )
 
       .subscribe(
-        category => {
+        (category : Category) => {
           if (category) {
             this.form.patchValue({ name: category.name });
+            this.imagePreview = category.imageScr
             MaterialService.updateTextInputs();
           }
           this.form.enable();
@@ -53,6 +58,23 @@ export class CategoriesFormComponent implements OnInit {
         error => MaterialService.toast(error.error.message))
   }
 
+
+  triggerClick(){
+    this.inputRef.nativeElement.click()
+  }
+
+  onFileUpload(event : any){
+    const file = event.target.files[0]
+
+
+    const reader = new FileReader()
+
+    reader.onload =() =>{
+      this.imagePreview = reader.result
+    }
+
+    reader.readAsDataURL(file)
+  }
   onSubmit() {
 
   }

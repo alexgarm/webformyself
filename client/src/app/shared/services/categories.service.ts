@@ -21,4 +21,11 @@ export class CategoriesService {
    return this.http.get<Category>(`/api/category/${id}`);
   }
 
+
+  create(name: string , image?: File){
+    this.http.post()
+  }
+
 }
+
+
