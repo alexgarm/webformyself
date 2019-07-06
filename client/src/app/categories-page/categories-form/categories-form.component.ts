@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { CategoriesService } from 'src/app/shared/services/categories.service';
@@ -17,11 +17,12 @@ export class CategoriesFormComponent implements OnInit {
   @ViewChild('input') inputRef: ElementRef;
   form: FormGroup;
   image: File;
-  imagePreview ='';
+  imagePreview = '';
   isNew = true;
   category: Category;
 
-  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
+  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService ,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -60,7 +61,18 @@ export class CategoriesFormComponent implements OnInit {
         error => MaterialService.toast(error.error.message));
   }
 
+  deleteCategory() {
+    const decision = window.confirm(`Вы уверены что хотите удалить категорию"${this.category.name}"`);
 
+    if (decision) {
+      this.categoriesService.delete(this.category._id)
+      .subscribe(
+        response => MaterialService.toast(response.message),
+        error => MaterialService.toast(error.error.message),
+        () => this.router.navigate(['/categories'])
+      );
+    }
+  }
   triggerClick() {
     this.inputRef.nativeElement.click();
   }
@@ -90,7 +102,7 @@ export class CategoriesFormComponent implements OnInit {
     obs$.subscribe(
       category => {
         this.category = category;
-        MaterialService.toast('Изменение сохранены')
+        MaterialService.toast('Изменение сохранены');
         this.form.enable();
 
       },

@@ -4,9 +4,9 @@
         <i class="material-icons">keyboard_arrow_right</i> {{isNew ? 'Добавить' : 'Редактировать'}} категорию
     </h4>
     <span>
-      <button class="btn btn-small red" (click)="deleteCategory()"
+      <button class="btn btn-small red" (click)="deleteCategory()" *ngIf="!isNew">
         <i class="material-icons">delete</i>
-      </button>
+        </button>
     </span>
 </div>
 
