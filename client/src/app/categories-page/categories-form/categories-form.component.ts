@@ -14,11 +14,12 @@ import { Category } from 'src/app/shared/interface';
 })
 export class CategoriesFormComponent implements OnInit {
 
-  @ViewChild('input') inputRef : ElementRef;
+  @ViewChild('input') inputRef: ElementRef;
   form: FormGroup;
   image: File;
-  imagePreview = '';
+  imagePreview ='';
   isNew = true;
+  category: Category;
 
   constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
 
@@ -35,9 +36,9 @@ export class CategoriesFormComponent implements OnInit {
         switchMap(
           (params: Params) => {
 
-            if (params['id']) {
+            if (params.id) {
               this.isNew = false;
-              return this.categoriesService.getById(params['id']);
+              return this.categoriesService.getById(params.id);
             }
 
             return of(null);
@@ -47,9 +48,9 @@ export class CategoriesFormComponent implements OnInit {
       )
 
       .subscribe(
-        (category : Category) => {
+        (category: Category) => {
           if (category) {
-            this.category = category
+            this.category = category;
             this.form.patchValue({ name: category.name });
             this.imagePreview = category.imageScr;
             MaterialService.updateTextInputs();
@@ -60,42 +61,44 @@ export class CategoriesFormComponent implements OnInit {
   }
 
 
-  triggerClick(){
+  triggerClick() {
     this.inputRef.nativeElement.click();
   }
 
-  onFileUpload(event : any){
+  onFileUpload(event: any) {
     const file = event.target.files[0];
-
+    this.image = file;
 
     const reader = new FileReader();
 
     reader.onload = () => {
-      this.imagePreview = reader.result;
+      this.imagePreview = reader.result.toString();
     };
 
     reader.readAsDataURL(file);
   }
   onSubmit() {
     let obs$;
-    this.form.disable()
+    this.form.disable();
 
-    if(this.isNew){
-      obs$ = this.categoriesService.create(this.form.value.name, this.image)
+    if (this.isNew) {
+      obs$ = this.categoriesService.create(this.form.value.name, this.image);
 
-    }else{
-      obs$ = this.categoriesService.update(this.category._id, this.form.value.name, this.image)
+    } else {
+      obs$ = this.categoriesService.update(this.category._id, this.form.value.name, this.image);
     }
     obs$.subscribe(
       category => {
-        this.form.enable()
+        this.category = category;
+        MaterialService.toast('Изменение сохранены')
+        this.form.enable();
 
-      }
-      error =>{
-        MaterialService.toast(error.error.message)
+      },
+      error => {
+        MaterialService.toast(error.error.message);
         this.form.enable();
       }
-    )
+    );
   }
 
 }

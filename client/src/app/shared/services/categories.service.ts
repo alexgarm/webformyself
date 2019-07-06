@@ -26,7 +26,7 @@ export class CategoriesService {
 
     const fd = new FormData();
     if (image) {
-      fd.append('image' , image , image.name);
+      fd.append('image' , image , image.name.toString());
     }
     fd.append('name', name);
     return this.http.post<Category>('/api/category', fd);
@@ -35,7 +35,7 @@ export class CategoriesService {
 
     const fd = new FormData();
     if (image) {
-      fd.append('image' , image , image.name);
+      fd.append('image' , image , image.name .toString());
     }
     fd.append('name', name);
     return this.http.patch<Category>(`/api/category/${id}`, fd);

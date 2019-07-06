@@ -4,7 +4,7 @@
         <i class="material-icons">keyboard_arrow_right</i> {{isNew ? 'Добавить' : 'Редактировать'}} категорию
     </h4>
     <span>
-      <button class="btn btn-small red">
+      <button class="btn btn-small red" (click)="deleteCategory()"
         <i class="material-icons">delete</i>
       </button>
     </span>
@@ -38,7 +38,7 @@
     </form>
 
     <div class="col s12 l4 center ">
-        <img class="responsive-img " style="height: 200px " [src]="imagePreview" *ngIf="imagePreview ">
+        <img class="responsive-img" [src]="imagePreview" *ngIf="imagePreview ">
     </div>
 </div>
 
