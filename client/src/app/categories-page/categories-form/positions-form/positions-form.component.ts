@@ -16,6 +16,8 @@ export class PositionsFormComponent implements OnInit , AfterViewInit, OnDestroy
   positions: Position[] = [];
   loading = false;
   modal: MaterialInstance;
+
+
   constructor(private positionService: PositionService) { }
 
   ngOnInit() {
@@ -35,10 +37,13 @@ export class PositionsFormComponent implements OnInit , AfterViewInit, OnDestroy
     this.modal = MaterialService.initModal(this.modalRef);
   }
   onSelectPosition(position: Position) {
+
     this.modal.open();
   }
   onAddPosition(){
+
     this.modal.open();
   }
+
 
 }
