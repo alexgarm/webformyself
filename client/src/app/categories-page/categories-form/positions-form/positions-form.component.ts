@@ -23,14 +23,14 @@ export class PositionsFormComponent implements OnInit , AfterViewInit, OnDestroy
   constructor(private positionService: PositionService) { }
 
   ngOnInit() {
-  this.form = new FormGroup({
-    name: new FormControl(null , Validators.required),
-    cost: new FormControl(null , [Validators.required , Validators.min(1)])
-  })
-    this.loading = true;
-    this.positionService.fetch(this.categoryId).subscribe(positions => {
-      this.positions = positions;
-      this.loading = false;
+          this.form = new FormGroup({
+          name: new FormControl(null , Validators.required),
+          cost: new FormControl(null , [Validators.required , Validators.min(1)])
+      });
+          this.loading = true;
+          this.positionService.fetch(this.categoryId).subscribe(positions => {
+          this.positions = positions;
+          this.loading = false;
     });
 
   }
@@ -38,19 +38,24 @@ export class PositionsFormComponent implements OnInit , AfterViewInit, OnDestroy
     this.modal.destroy();
   }
   ngAfterViewInit() {
-
     this.modal = MaterialService.initModal(this.modalRef);
   }
   onSelectPosition(position: Position) {
 
     this.modal.open();
   }
-  onAddPosition(){
+  onAddPosition() {
 
     this.modal.open();
   }
-  onCancel(){
+  onCancel() {
     this.modal.close();
+  }
+  onSubmit() {
+
+  }
+  onDeletePosition() {
+
   }
 
 
